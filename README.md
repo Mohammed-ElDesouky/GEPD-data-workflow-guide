@@ -1,6 +1,6 @@
 # **GEPD Data Workflow: Step-by-Step Guide**
 
-**A guide for going from raw Global Education Policy Dashboard (GEPD) data to a set of key microdata files and indicators.**
+**A guide for producing a set of key Global Education Policy Dashboard (GEPD) microdata files and indicators from raw data.**
 
 *Created: December 2023*            
 *Last Updated: September 2024*            
@@ -37,7 +37,7 @@ This is a step-by-step guide on how to process the GEPD raw survey data and prod
 
 The GEPD collects country-level data through administering a survey with a set of modules:  
 
-1. School modules (school-level questionnaire, student-level questionnaire for Grades 4 and 1, and teacher-level questionnaire);  
+1. School modules (including school-level questionnaire, student-level questionnaire for Grades 4 and 1, and teacher-level questionnaire);  
 2. Public officials' module (Survey of Public Officials); and 
 3. Policy module (Policy Survey).  
 
@@ -54,7 +54,7 @@ _**Note:** Ensure that both software installations are installed and updated bef
 
 ## **[Step 1]: Cloning the GitHub folder to your local device**
 
-The raw data is downloaded from the survey solution and is saved on OneDrive; inside the respective country folder. These folders are added to GitHub as repositories to facilitate country collaboration and version control.
+The raw data is downloaded from Survey Solution and is saved on OneDrive inside the respective country folder. These folders are synced with GitHub to facilitate collaboration and version control. 
 
 Inside each country’s folder/repository, the data workflow is organized across four sub-folders:
 
@@ -66,7 +66,7 @@ Inside each country’s folder/repository, the data workflow is organized across
 _**Note:** Before working with the data, the user must first set-up the GitHub’s country folder/repository on the local machine either as “local repository” or “cloned repository”._
 
 ### **Adding local repository (recommended)**
-This is the recommended process If using a WB machine/VDI and having access rights to OneDrive where the data is stored.
+This is the recommended process if using a WB machine/VDI and having access rights to OneDrive where the data is stored.
 
 On GitHub Desktop, click <<**File**\>>, <<**Add local repository**\>>, choose the country folder on OneDrive, then <<**Add repository**\>>.
 
@@ -81,7 +81,7 @@ These steps will create an exact copy of this GitHub folder on your local comput
 
 ## **[Step 2]: Downloading the raw data from Survey Solutions to the cloned folder**
 
-After the GitHub folder is cloned, the sub-folder **`01_GEPD_raw_data`** would be sub-divided into folders corresponding to the survey level: `School`, `Public_Officials`, `Policy_Survey`, and `Sampling`. The user must download and place the raw data files, from survey solution, into the corresponding sub-folder. Please note: these raw data files are loaded once into Stata, and any processing to it will be saved as a copy into a different `Cleaned folder` as we are going to explain later —**the user must avoid altering or overwriting the raw files**.
+After the GitHub folder is cloned, the sub-folder **`01_GEPD_raw_data`** would be sub-divided into folders corresponding to the survey level: `School`, `Public_Officials`, `Policy_Survey`, and `Sampling`. The user must download and place the raw data files, from Survey Solutions, into the corresponding sub-folder. Please note: these raw data files are loaded once into Stata, and any processing to it will be saved as a copy into a different `Cleaned folder` as we are going to explain later —**the user must avoid altering or overwriting the raw files**.
 
 The user must download all the data files related to:
 
@@ -92,7 +92,7 @@ The user must download all the data files related to:
 
 The process of downloading the data is as straightforward as: (a) signing in to the administrator account on the [GEPD server](http://etri.gepd.solutions/) on Survey Solutions with the relevant credentials, (b) selecting to the relevant country workspace (in the top left corner), (c) navigating to **_Data Export_** at the top panel and selected the survey template to export as well as the status **_Approved by HQ_**,  and, (d) downloading all relevant questionnaire data (school survey and survey of public officials) related to this country. Typically, the data is exported in Stata 14 format and includes meta information.  
 
-To guide the user on which modules are being administered in each country, one can create a pdf download of the questionnaire in [Survey Solutions Designer](https://designer.mysurvey.solutions/) Open the questionnaire and select ‘Download PDF’ from the buttons in the top right corner of the interface. This will produce an HTML document containing questions divided by module, together with the variable names, answer options and skip patterns/constraints.  
+To guide the user on which modules are being administered in each country, one can create a pdf download of the questionnaire in [Survey Solutions Designer](https://designer.mysurvey.solutions/), open the questionnaire and select ‘Download PDF’ from the buttons in the top right corner of the interface. This will produce an HTML document containing questions divided by module, together with the variable names, answer options and skip patterns/constraints.  
 
 A list is provided in the annex of what raw data files a user is expected to see downloaded into the raw data folder. A user may also note that the provided list is only a guidance, and it is not intended to be an exhaustive list of all raw data files that must exist across all countries.  
 
@@ -100,11 +100,11 @@ _**Note**: If you do not have a Survey Solutions account, please get in touch wi
 
 ## **[Step 3]: Merging teachers' modules**
 
-Teachers are being surveyed in different modules (hence different datasets) and all the teachers’ data can be downloaded as separate data files from Survey Solutions. However, for the processing do-files to work as intended, teachers' modules must be combined into a single data file. A heritage procedure attempts to do that using a fuzzy matching technique, which was developed to overcome the issue of the same teacher with different IDs across modules. Note that this step is unnecessary for present implementations of the GEPD (as well as for the Punjab and Sindh provinces of Pakistan, and Edo State in Nigeria), since the teachers in these surveys have consistent IDs across modules. Nonetheless, more information on fuzzy matching can be found in the annex. 
+Teachers are being surveyed in different modules (hence different datasets) and all the teachers’ data can be downloaded as separate data files from Survey Solutions. However, for the processing do-files to work as intended, teachers' modules must be combined into a single data file. A heritage procedure attempts to do that using a fuzzy matching technique, which was developed to overcome the issue of the same teacher with different IDs across modules. Note that this step is unnecessary for future implementations of the GEPD of the GEPD (as well as for the Punjab and Sindh provinces of Pakistan, and Edo State in Nigeria), since the teachers in these surveys have consistent IDs across modules. More information on fuzzy matching can be found in the annex. 
 
 To combine teachers’ modules, a user would need to execute a “joinby” command, or similar commands, which matches all modules based on two key variables “interview_key” and “teachers_id”.
 
-The Stata scrip that merges teachers’ modules is titled <<**02_school_data_merge.do**>>. More information on this is provided int Step no.5 below.
+The Stata scrip that merges teachers’ modules is titled <<**02_school_data_merge.do**>>. More information on this is provided int Step 5 below.
 
 Once the teachers' modules are merged, the resulting teachers file is saved in the `School` sub-folder under **`01_GEPD_raw_data`** with the title “**Country_teacher_level_test.dta**” 
 
@@ -119,7 +119,7 @@ Before running any of the processing code files, a user must run the initializat
 
 ## **[Step 5]: Running the cleaning and processing do-files**
 
-After executing the previous step, **_on the same opened STATA console_**, run the processing do-files. The folder **`02_programs\School`** include three do-files needed to produce the necessary cleaned and merged datasets, which a user can either run at once by running the master script `01_school_run`, or individually. Either case, please ensure that the following do-files are loaded in the same Stata session/console that ran the `parameters` and `profile` do-files:
+After executing the previous step, **_on the same opened STATA console_**, run the processing do-files. The folder **`02_programs\School`** includes three do-files needed to produce the necessary cleaned and merged datasets, which a user can either run at once by running the master script `01_school_run`, or individually. Either case, please ensure that the following do-files are loaded in the same Stata session/console that ran the `parameters` and `profile` do-files:
 
 1. **`01_school_run`** is the master do-file which runs all the three following scripts.   
 
@@ -155,7 +155,7 @@ Once the cleaning script is run successfully, the cleaned data can be found in <
 
 ## **[Step 8]: Producing the GEPD key indicators**
 
-The GEPD’s indicators are contained in an Excel file along with a unique key for each indicator. This file's purpose is to cstore the set of indicators published on the GEPD website and used for populating the standard GEPD PowerPoint slides. In addition, these are the indicators available on the World Bank API. See <https://databank.worldbank.org/source/education-policy>.
+The GEPD’s indicators are contained in an Excel file along with a unique key for each indicator. This file's purpose is to store the set of indicators published on the GEPD website and used for populating the standard GEPD PowerPoint slides.
 
 Once the data (school – public officials – policy survey) has been processed from the previous steps, a user may proceed with running the indicators’ R-script which pulls all the cleaned datasets, aggregates them and produce a list of standard GEPD indicators. The R-script also organizes and stores this standard list of indicators into an (.xlsx) file and saves it under **`04_GEPD_Indicators`**.  
 
@@ -169,3 +169,5 @@ Prior to running the R-script, a user must make sure that three template files a
     <<**03_GEPD_processed_data/Other_Indicators**\>>
 
 The R-script is titled `GEPD_indicators.R` and can be found in **`02_programs/GEPD_Indicators`**. Users need to edit the information the top of the script under “Country name and year of survey”. Detailed guidance on each step is given directly within the R-script.
+
+Final indicators are available through the World Bank API. See <https://databank.worldbank.org/source/education-policy>.
