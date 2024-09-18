@@ -120,7 +120,7 @@ After executing the previous step, **_on the same opened STATA console_**, run t
 
 4. **`03_school_data_cleaner`** cleans the data produced from the previous step and aggregates correlated variables to produce the GEPD indicators. The outcome is the four data files, as above, but cleaned, for each of those groups and are stored automatically in **`03_GEPD_processed \School\Confidential\Cleaned`** folder.
 
-_**Note:** These datasets are only meant to be used by the WB team and not meant to be shared publicly since they are not yet anonymized._  
+   _**Note:** These datasets are only meant to be used by the WB team and not meant to be shared publicly since they are not yet anonymized._  
 
 4. **`04_school_data_anonymizer`** anonymizes the data files produced from the previous step and stores the anonymized version of the four cleaned school-level data files in **`03_GEPD_processed\School\Confidential\Cleaned\Anonymized`**. A user would need to tweak this do-file for each country before running it, this is an inevitable process, since part of the anonymization is country-specific. Information on what to tweak is listed inside the do-file. 
 
