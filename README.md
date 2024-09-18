@@ -96,18 +96,7 @@ A list is provided in the annex of what raw data files a user is expected to see
 
 _**Note**: If you do not have a Survey Solutions account, please get in touch with the GEPD team at <educationdashboard@worldbank.org>_
 
-## **[Step 3]: Merging teachers' modules**
-
-Teachers are being surveyed in different modules (hence different datasets) and all the teachers’ data can be downloaded as separate data files from Survey Solutions. However, for the processing do-files to work as intended, teachers' modules must be combined into a single data file. A heritage procedure attempts to do that using a fuzzy matching technique, which was developed to overcome the issue of the same teacher with different IDs across modules. Note that this step is unnecessary for future implementations of the GEPD of the GEPD (as well as for the Punjab and Sindh provinces of Pakistan, and Edo State in Nigeria), since the teachers in these surveys have consistent IDs across modules. More information on fuzzy matching can be found in the annex. 
-
-To combine teachers’ modules, a user would need to execute a “joinby” command, or similar commands, which matches all modules based on two key variables “interview_key” and “teachers_id”.
-
-The Stata scrip that merges teachers’ modules is titled <<**02_school_data_merge.do**>>. More information on this is provided int Step 5 below.
-
-Once the teachers' modules are merged, the resulting teachers file is saved in the `School` sub-folder under **`01_GEPD_raw_data`** with the title “**Country_teacher_level_test.dta**” 
-
-
-## **[Step 4]: Running the initialization do-files**
+## **[Step 3]: Running the initialization do-files**
 
 Before running any of the processing code files, a user must run the initialization do-files located in the main folder titled `GEPD_CountryX`. These do-files will set the parameters and file paths for the code to run. 
 
@@ -115,7 +104,7 @@ Before running any of the processing code files, a user must run the initializat
 
 2. **`profile_GEPD.do`** should be opened in the same Stata console as `parameters.do` and allows for setting up file paths and data directories. Please note that this do-file would prompt the user to select on-screen the `run_GEPD.do` inside the countries folder. Ensure to select the correct `run_GEPD.do` which is inside the country folder where the data is stored.  
 
-## **[Step 5]: Running the cleaning and processing do-files**
+## **[Step 4]: Running the cleaning and processing do-files**
 
 After executing the previous step, **_on the same opened STATA console_**, run the processing do-files. The folder **`02_programs\School`** includes three do-files needed to produce the necessary cleaned and merged datasets, which a user can either run at once by running the master script `01_school_run`, or individually. Either case, please ensure that the following do-files are loaded in the same Stata session/console that ran the `parameters` and `profile` do-files:
 
@@ -123,7 +112,7 @@ After executing the previous step, **_on the same opened STATA console_**, run t
 
 2. **`02_school_data_merge`** runs a program to merge variables from the sampling frame (weights, strata and other observable characteristics such as the location of the school) to each of the school-level datasets (g1 students, g4 students, teachers and school modules). In addition, it merges teachers’ modules and includes all the possible corrections for data entry mistakes in the school-level datasets. The input data is the downloaded raw data which is prespecified in the script. The outcome is four data files for each of those groups and are saved automatically in **`03_GEPD_processed \School\Confidential\Merged`**.
 
-   _**Note on merging teachers' modules**_
+   _**Note on merging teachers' modules:**_
 
    Teachers are being surveyed in different modules (hence different datasets) and all the teachers’ data can be downloaded as separate data files from Survey Solutions. However, for the processing do-files to work as intended, teachers' modules must be combined into a single data file. A heritage procedure attempts to do that using a fuzzy matching technique, which was developed to overcome the issue of the same teacher with different IDs across modules. Note that this step is unnecessary for future implementations of the GEPD of the GEPD (as well as for the Punjab and Sindh provinces of Pakistan, and Edo State in Nigeria), since the teachers in these surveys have consistent IDs across modules. More information on fuzzy matching can be found in the annex.
 
@@ -135,7 +124,7 @@ _**Note:** These datasets are only meant to be used by the WB team and not meant
 
 4. **`04_school_data_anonymizer`** anonymizes the data files produced from the previous step and stores the anonymized version of the four cleaned school-level data files in **`03_GEPD_processed\School\Confidential\Cleaned\Anonymized`**. A user would need to tweak this do-file for each country before running it, this is an inevitable process, since part of the anonymization is country-specific. Information on what to tweak is listed inside the do-file. 
 
-## **[Step 6]: Cleaning public officials' data**
+## **[Step 5]: Cleaning public officials' data**
 
 The process to clean public official data is nearly identical to cleaning the school-level data (Step 5). School data must be cleaned before the public officials' files are cleaned. This is because the public officials are asked about teacher absence in the system and the answers are verified by checking against the GEPD teacher data.  
 
@@ -151,13 +140,13 @@ To clean the data, a user would need to execute two do files located in <<**02_p
 
 2. Once the cleaning script is run successfully, the cleaned data can be found in <<**03_GEPD_processed_data\\Public_Officials\\Confidential**>>.
 
-## **[Step 7]: Cleaning policy (experts) survey data**
+## **[Step 6]: Cleaning policy (experts) survey data**
 
 Meanwhile, expert data can only be processed using an R-script `policy_survey.Rmd` in **`/02_programs/Policy_Survey/R`**. At the top of the script, user would need to customize the information under “Country name and year of survey”. Detailed guidance on each step is given directly within the R-script. Note: to avoid problems with running any R script caused by directory set up, including the policy survey script, please open scripts using the Rstudio project titled `GEPD_Production-countryname.Rproj`, and found in the country’s folder. 
 
 Once the cleaning script is run successfully, the cleaned data can be found in <<**03_GEPD_processed_data/Policy_Survey**\>>.
 
-## **[Step 8]: Producing the GEPD key indicators**
+## **[Step 7]: Producing the GEPD key indicators**
 
 The GEPD’s indicators are contained in an Excel file along with a unique key for each indicator. This file's purpose is to store the set of indicators published on the GEPD website and used for populating the standard GEPD PowerPoint slides.
 
