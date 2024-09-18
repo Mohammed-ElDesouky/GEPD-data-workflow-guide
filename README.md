@@ -18,15 +18,15 @@
 
 [[Step 2]: Downloading the raw data from Survey Solutions to the cloned folder](#step-2-downloading-the-raw-data-from-survey-solutions-to-the-cloned-folder)
 
-[[Step 3]: Running the initialization do-files](#step-4-running-the-initialization-do-files)
+[[Step 3]: Running the initialization do-files](#step-3-running-the-initialization-do-files)
 
-[[Step 4]: Running the cleaning and processing do-files](#step-5-running-the-cleaning-and-processing-do-files)
+[[Step 4]: Running the cleaning and processing do-files](#step-4-running-the-cleaning-and-processing-do-files)
 
-[[Step 5]: Cleaning public officials' data](#step-6-cleaning-public-officials-data)
+[[Step 5]: Cleaning public officials' data](#step-5-cleaning-public-officials-data)
 
-[[Step 6]: Cleaning policy (experts) survey data](#step-7-cleaning-policy-experts-survey-data)
+[[Step 6]: Cleaning policy (experts) survey data](#step-6-cleaning-policy-experts-survey-data)
 
-[[Step 7]: Producing the GEPD key indicators](#step-8-producing-the-gepd-key-indicators)
+[[Step 7]: Producing the GEPD key indicators](#step-7-producing-the-gepd-key-indicators)
 
 
 ## **About this guide**
