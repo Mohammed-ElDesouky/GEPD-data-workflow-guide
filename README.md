@@ -54,11 +54,9 @@ _**Note:** Ensure that both software installations are installed and updated bef
 
 ## **[Step 1]: Cloning the GitHub folder to your local device**
 
-The raw data is downloaded from Survey Solution and is saved on OneDrive inside the respective country folder. These folders are synced with GitHub to facilitate collaboration and version control. 
-
 Inside each country’s folder/repository, the data workflow is organized across four sub-folders:
 
-1. **01_GEPD_raw_data**; contains the raw data files downloaded from the GEPD Survey Solutions Server.  This folder contains three subfolders: a `School` folder for school data, a `Public_Officials` folder for data from the Survey of Public Officials, and a `Policy_Survey` folder for data from the expert Policy Survey.   
+1. **01_GEPD_raw_data**; contains the raw data files downloaded from the GEPD Survey Solutions Server.  This folder contains three subfolders: a `School` folder for school data, a `Public_Officials` folder for data from the Survey of Public Officials, and a `Policy_Survey` folder for data from the expert Policy Survey. The raw data is downloaded from Survey Solution and is saved on OneDrive inside the respective country folder and synced with GitHub.
 2. **02_programs**; contains the scripts that will be used to clean and process the raw data. There are separate sub-folders for each of the three data sources: `School`, `Public_Officials`, and `Policy_Survey`.    
 3. **03_GEPD_processed_data**; contains the cleaned and anonymized data files. There are separate sub-folders for each of the three data sources: `School`, `Public_Officials`, and `Policy_Survey`.  
 4. **04_GEPD_Indicators**; contains the set of final GEPD indicators.
@@ -71,7 +69,7 @@ This is the recommended process if using a WB machine/VDI and having access righ
 On GitHub Desktop, click <<**File**\>>, <<**Add local repository**\>>, choose the country folder on OneDrive, then <<**Add repository**\>>.
 
 ### **Clone the GitHub repository**
-Alternatively, if the above-mentioned case is not applicable, a user could clone the GitHub’s country folder to their local device.
+Alternatively, if the above-mentioned case is not applicable, a user could clone the GitHub country folder to their local device.
 
 1. On the internet browser, go to the country’s repo on GitHub.
 2. At the top right of the [GitHub page](https://github.com/GEPD-Production), right click on the <<**Code**\>> tab, then select the option to open the folder with GitHub Desktop.
@@ -123,9 +121,14 @@ After executing the previous step, **_on the same opened STATA console_**, run t
 
 1. **`01_school_run`** is the master do-file which runs all the three following scripts.   
 
-2. **`02_school_data_merge`** runs a program to merge variables from the sampling frame (weights, strata and other observable characteristics such as the location of the school) to each of the school-level datasets (g1 students, g4 students, teachers and school modules). In addition, it merges teachers’ modules and includes all the possible corrections for data entry mistakes in the school-level datasets. The input data is the downloaded raw data which is prespecified in the script. The outcome is four data files for each of those groups and are saved automatically in **`03_GEPD_processed \School\Confidential\Merged`**.  
+2. **`02_school_data_merge`** runs a program to merge variables from the sampling frame (weights, strata and other observable characteristics such as the location of the school) to each of the school-level datasets (g1 students, g4 students, teachers and school modules). In addition, it merges teachers’ modules and includes all the possible corrections for data entry mistakes in the school-level datasets. The input data is the downloaded raw data which is prespecified in the script. The outcome is four data files for each of those groups and are saved automatically in **`03_GEPD_processed \School\Confidential\Merged`**.
 
-3. **`03_school_data_cleaner`** cleans the data produced from the previous step and aggregates correlated variables to produce the GEPD indicators. The outcome is the four data files, as above, but cleaned, for each of those groups and are stored automatically in **`03_GEPD_processed \School\Confidential\Cleaned`** folder.
+   _**Note on merging teachers' modules**
+Teachers are being surveyed in different modules (hence different datasets) and all the teachers’ data can be downloaded as separate data files from Survey Solutions. However, for the processing do-files to work as intended, teachers' modules must be combined into a single data file. A heritage procedure attempts to do that using a fuzzy matching technique, which was developed to overcome the issue of the same teacher with different IDs across modules. Note that this step is unnecessary for future implementations of the GEPD of the GEPD (as well as for the Punjab and Sindh provinces of Pakistan, and Edo State in Nigeria), since the teachers in these surveys have consistent IDs across modules. More information on fuzzy matching can be found in the annex. 
+
+To combine teachers’ modules, a user would need to execute a “joinby” command, or similar commands, which matches all modules based on two key variables “interview_key” and “teachers_id”.The Stata scrip that merges teachers’ modules is titled <<**02_school_data_merge.do**>> and highlighted above in point 2. Once the teachers' modules are merged, the resulting teachers file is saved in the `School` sub-folder under **`01_GEPD_raw_data`** with the title “**Country_teacher_level_test.dta**”  
+
+4. **`03_school_data_cleaner`** cleans the data produced from the previous step and aggregates correlated variables to produce the GEPD indicators. The outcome is the four data files, as above, but cleaned, for each of those groups and are stored automatically in **`03_GEPD_processed \School\Confidential\Cleaned`** folder.
 
 _**Note:** These datasets are only meant to be used by the WB team and not meant to be shared publicly since they are not yet anonymized._  
 
