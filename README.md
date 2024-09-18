@@ -18,17 +18,15 @@
 
 [[Step 2]: Downloading the raw data from Survey Solutions to the cloned folder](#step-2-downloading-the-raw-data-from-survey-solutions-to-the-cloned-folder)
 
-[[Step 3]: Merging teachers' modules](#step-3-merging-teachers-modules)
+[[Step 3]: Running the initialization do-files](#step-4-running-the-initialization-do-files)
 
-[[Step 4]: Running the initialization do-files](#step-4-running-the-initialization-do-files)
+[[Step 4]: Running the cleaning and processing do-files](#step-5-running-the-cleaning-and-processing-do-files)
 
-[[Step 5]: Running the cleaning and processing do-files](#step-5-running-the-cleaning-and-processing-do-files)
+[[Step 5]: Cleaning public officials' data](#step-6-cleaning-public-officials-data)
 
-[[Step 6]: Cleaning public officials' data](#step-6-cleaning-public-officials-data)
+[[Step 6]: Cleaning policy (experts) survey data](#step-7-cleaning-policy-experts-survey-data)
 
-[[Step 7]: Cleaning policy (experts) survey data](#step-7-cleaning-policy-experts-survey-data)
-
-[[Step 8]: Producing the GEPD key indicators](#step-8-producing-the-gepd-key-indicators)
+[[Step 7]: Producing the GEPD key indicators](#step-8-producing-the-gepd-key-indicators)
 
 
 ## **About this guide**
@@ -63,12 +61,12 @@ Inside each country’s folder/repository, the data workflow is organized across
 
 _**Note:** Before working with the data, the user must first set-up the GitHub’s country folder/repository on the local machine either as “local repository” or “cloned repository”._
 
-### **Adding local repository (recommended)**
+#### **Adding local repository (recommended)**
 This is the recommended process if using a WB machine/VDI and having access rights to OneDrive where the data is stored.
 
 On GitHub Desktop, click <<**File**\>>, <<**Add local repository**\>>, choose the country folder on OneDrive, then <<**Add repository**\>>.
 
-### **Clone the GitHub repository**
+#### **Clone the GitHub repository**
 Alternatively, if the above-mentioned case is not applicable, a user could clone the GitHub country folder to their local device.
 
 1. On the internet browser, go to the country’s repo on GitHub.
